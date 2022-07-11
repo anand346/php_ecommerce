@@ -208,6 +208,41 @@ class Product
         $result = $this->db->select($query);
         return $result;
     }
+
+    public function latestFromIphone(){
+        $query  = "SELECT * FROM tbl_product WHERE brandId = 3 ORDER BY productId DESC LIMIT 1";
+        $result = $this->db->select($query);
+        return $result; 
+    }
+
+    public function latestFromSamsung(){
+        $query  = "SELECT * FROM tbl_product WHERE brandId = 1 ORDER BY productId DESC LIMIT 1";
+        $result = $this->db->select($query);
+        return $result; 
+    }
+
+    public function latestFromAcer(){
+        $query  = "SELECT * FROM tbl_product WHERE brandId = 2 ORDER BY productId DESC LIMIT 1";
+        $result = $this->db->select($query);
+        return $result; 
+    }
+
+    public function latestFromHp(){
+        $query  = "SELECT * FROM tbl_product WHERE brandId = 5 ORDER BY productId DESC LIMIT 1";
+        $result = $this->db->select($query);
+        return $result; 
+    }
+  
+    public function getProductByCat($id){
+        $id = $this->db->link->real_escape_string($id);
+        $query = "  SELECT p.*,c.catName,b.brandName 
+                    FROM tbl_product as p,tbl_category as c,tbl_brand as b
+                    WHERE p.catId = c.catId AND p.brandId = b.brandId AND p.catId = '{$id}'
+                    ORDER BY p.productId DESC         
+                ";
+        $result = $this->db->select($query);
+        return $result;      
+    }
 }
 
 

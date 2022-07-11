@@ -1034,6 +1034,7 @@ p.note{
 	color: #969696;
 	line-height: 1.6em;
 	font-family: verdana, arial, helvetica, helve, sans-serif;
+	word-wrap: break-word;
 }
 .product-tags h4{
 	padding:10px 0;
