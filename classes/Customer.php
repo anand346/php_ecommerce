@@ -77,7 +77,40 @@ class Customer{
       $result = $this->db->select($query);
       return $result;
     }
+  
     
+    public function customerUpdate($data,$id){
+
+        $id       = $this->db->link->real_escape_string($id);
+        $name     = $this->db->link->real_escape_string($data['name']);
+        $city     = $this->db->link->real_escape_string($data['city']);
+        $zip      = $this->db->link->real_escape_string($data['zip']);
+        $email    = $this->db->link->real_escape_string($data['email']);
+        $address  = $this->db->link->real_escape_string($data['address']);
+        $country  = $this->db->link->real_escape_string($data['country']);
+        $phone    = $this->db->link->real_escape_string($data['phone']);
+
+        if ($name == "" || $city == "" || $zip == "" || $email == "" || $address == "" || $country == "" || $phone == "") {
+          $msg = "<span class = 'error'>Fields must not be empty.</span>";
+          return $msg;
+        }
+
+        // $mailQuery = "SELECT * FROM tbl_customer WHERE email= '{$email}' LIMIT 1";
+        // $resultMail = $this->db->select($mailQuery);
+        // if($resultMail){
+        //     $msg = "<span class = 'error'>Email is already in use.</span>";
+        //     return $msg;
+        // }
+        $query = "UPDATE tbl_customer SET name = '{$name}' ,address = '{$address}',city = '{$city}',country = '{$country}',zip = '{$zip}',phone = '{$phone}',email = '{$email}' WHERE id = '$id'";
+        $result = $this->db->update($query);
+        if ($result) {
+            $msg = "<span class = 'success'>Customer details updated successfully.</span>";
+            return $msg;
+        } else {
+            $msg = "<span class = 'error'>Customer details not updated.</span>";
+            return $msg;
+        }
+    }
 }
 
 ?>

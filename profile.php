@@ -21,6 +21,9 @@
             ?>
             <table class = "tblone">
                 <tr>
+                    <td colspan="3"><h2>Your Profile Details</h2></td>
+                </tr>
+                <tr>
                     <td width = "20%">Name</td>
                     <td width = "5%" >:</td>
                     <td><?php echo $row['name']; ?></td>
@@ -54,6 +57,11 @@
                     <td>Country</td>
                     <td>:</td>
                     <td><?php echo $row['country']; ?></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td><a href="editprofile.php">Update Details</a></td>
                 </tr>
             </table>
             <?php } } ?>
