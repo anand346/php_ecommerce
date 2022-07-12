@@ -46,6 +46,38 @@ class Customer{
             return $msg;
         }
     }
+
+    public function customerLogin($data){
+      $email    = $this->db->link->real_escape_string($data['email']);      
+      $password = md5($this->db->link->real_escape_string($data['password']));
+
+      if(empty($email) || empty($password)){
+        $msg = "<span class = 'error'>Fields must not be empty.</span>";
+        return $msg;
+      }
+
+      $query = "SELECT * FROM tbl_customer WHERE email = '{$email}' AND password = '{$password}' ";
+      $result = $this->db->select($query);
+
+      if($result){
+        $values = $result->fetch_assoc();
+        Session::set("cusLogin","true");
+        Session::set("cusId",$values['id']);
+        Session::set("cusName",$values['name']);
+        header("location:cart.php");
+      }else{
+        $msg = "<span class = 'error'>Email or password does not match.</span>";
+        return $msg;
+      }
+    }
+
+    public function getCustomerData($id){
+      $id = $this->db->link->real_escape_string($id);
+      $query = "SELECT * FROM tbl_customer WHERE id = '$id'";
+      $result = $this->db->select($query);
+      return $result;
+    }
+    
 }
 
 ?>
