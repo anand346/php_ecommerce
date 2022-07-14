@@ -102,12 +102,24 @@ class Cart{
                 $productId = $row['productId'];
                 $productName = $row['productName'];
                 $quantity = $row['quantity'];
-                $price = $row['price'];
+                $price = $row['price']*$quantity;
                 $image = $row['image'];
                 $insertQuery = "INSERT INTO tbl_order(cusId,productId,productName,quantity,price,image) VALUES('{$cusId}','{$productId}','{$productName}','{$quantity}','{$price}','{$image}')";
                 $insertResult = $this->db->insert($insertQuery);
             }
         }
+    }
+
+    public function payableAmount($cusId){
+        $query = "SELECT price FROM tbl_order WHERE cusId = '$cusId' AND date = now() ";
+        $result = $this->db->select($query);
+        return $result;      
+    }
+
+    public function getOrderedProduct($cusId){
+        $query = "SELECT * FROM tbl_order WHERE cusId = '$cusId' ORDER BY productId DESC";
+        $result = $this->db->select($query);
+        return $result;      
     }
 
 }

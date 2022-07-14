@@ -7,7 +7,7 @@ if ($login == false) {
 
 ?>
 <style>
-    .payment {
+    .psuccess {
         width: 500px;
         min-height: 200px;
         text-align: center;
@@ -16,39 +16,37 @@ if ($login == false) {
         padding: 50px;
     }
 
-    .payment h2 {
+    .psuccess h2 {
         border-bottom: 1px solid #ddd;
         margin-bottom: 40px;
         padding-bottom: 10px;
     }
-
-    .payment a {
-        background: #ff0000;
-        border-radius: 3px;
-        color: #fff;
-        font-size: 25px;
-        padding: 5px 30px;
-    }
-
-    .back a {
-        font-size:25px;
-        width: 160px;
-        margin: 5px auto 0;
-        padding: 7px 0;
-        text-align: center;
-        display: block;
-        background: #555;
-        border: 1px solid #333;
-        color: #fff;
-        border-radius: 3px;
+    .psuccess p{
+        line-height: 25px;
+        font-size: 18px;
+        text-align: left;
     }
 </style>
 <div class="main">
     <div class="content">
         <div class="section group">
-            <div class="payment">
+            <div class="psuccess">
                 <h2>Success</h2>
-                <p>Payment Successful</p>
+                <?php
+                    $cusId = Session::get("cusId");
+                    $amount = $ct->payableAmount($cusId);
+                    $sum = 0;
+                    if($amount){
+                        while($row = $amount->fetch_assoc()){
+                            $sum += $row['price'];
+                        }
+                    }
+                ?>
+                <p style = "color:red;">Total Payable Amount(Including VAT) : $<?php
+                    $vat = $sum*0.1;
+                    echo $total = $sum + $vat;
+                ?></p>
+                <p>Thanks for purchase. Recieve your order successfully . We will contact you ASAP with delivery details.Here is your order details ... <a href="orderdetails.php">Visit here</a></p>
             </div>
         </div>
     </div>

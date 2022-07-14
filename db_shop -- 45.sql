@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 10, 2022 at 06:18 AM
+-- Generation Time: Jul 14, 2022 at 08:11 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.1
 
@@ -82,16 +82,6 @@ CREATE TABLE `tbl_cart` (
   `image` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `tbl_cart`
---
-
-INSERT INTO `tbl_cart` (`cartId`, `sId`, `productId`, `productName`, `price`, `quantity`, `image`) VALUES
-(1, 'jv1uiahlfntvtjlgjgrf6akf78', 13, 'Acer ideapad', 45000, 1, 'upload/244cd8735d.png'),
-(2, 'jv1uiahlfntvtjlgjgrf6akf78', 12, 'Fridge', 8000, 1, 'upload/d9103b412a.png'),
-(3, 'jv1uiahlfntvtjlgjgrf6akf78', 13, 'Acer ideapad', 45000, 1, 'upload/244cd8735d.png'),
-(13, 'nkkd5miol5cven4rrt95l9ms3i', 14, 'Macbook pro', 100000, 3, 'upload/72cafe3af0.png');
-
 -- --------------------------------------------------------
 
 --
@@ -120,6 +110,71 @@ INSERT INTO `tbl_category` (`catId`, `catName`) VALUES
 (11, 'jewellery'),
 (12, 'Sports and Fitness'),
 (14, 'beauty,healthcare');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_customer`
+--
+
+CREATE TABLE `tbl_customer` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `address` text NOT NULL,
+  `city` varchar(30) NOT NULL,
+  `country` varchar(30) NOT NULL,
+  `zip` varchar(30) NOT NULL,
+  `phone` varchar(30) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(32) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_customer`
+--
+
+INSERT INTO `tbl_customer` (`id`, `name`, `address`, `city`, `country`, `zip`, `phone`, `email`, `password`) VALUES
+(2, 'abhishek', 'siddhart enclave', 'bhopal', 'india', '462022', '9039495825', 'abhishekraj8685@gmail.com', '7fc6021e40e0367b9f2d36833698a4bd'),
+(3, 'anand', 'siddhart enclave', 'bhopal', 'india', '462022', '9340824255', 'rajanand9039@gmail.com', 'fc5e038d38a57032085441e7fe7010b0');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_order`
+--
+
+CREATE TABLE `tbl_order` (
+  `id` int(11) NOT NULL,
+  `cusId` int(11) NOT NULL,
+  `productId` int(11) NOT NULL,
+  `productName` varchar(255) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `price` float(10,2) NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `date` datetime NOT NULL DEFAULT current_timestamp(),
+  `status` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_order`
+--
+
+INSERT INTO `tbl_order` (`id`, `cusId`, `productId`, `productName`, `quantity`, `price`, `image`, `date`, `status`) VALUES
+(1, 3, 11, 'mouse', 1, 300.00, 'upload/9c5e05dda2.png', '2022-07-14 09:39:44', 0),
+(2, 3, 14, 'Macbook pro', 1, 100000.00, 'upload/72cafe3af0.png', '2022-07-14 09:39:44', 0),
+(3, 3, 11, 'mouse', 1, 300.00, 'upload/9c5e05dda2.png', '2022-07-14 09:39:44', 0),
+(4, 3, 12, 'Fridge', 1, 8000.00, 'upload/d9103b412a.png', '2022-07-14 11:21:30', 0),
+(5, 3, 13, 'Acer ideapad', 1, 45000.00, 'upload/244cd8735d.png', '2022-07-14 11:21:30', 0),
+(6, 3, 11, 'mouse', 1, 300.00, 'upload/9c5e05dda2.png', '2022-07-14 11:22:58', 0),
+(7, 3, 13, 'Acer ideapad', 1, 45000.00, 'upload/244cd8735d.png', '2022-07-14 11:22:58', 0),
+(8, 3, 14, 'Macbook pro', 1, 100000.00, 'upload/72cafe3af0.png', '2022-07-14 11:22:58', 0),
+(9, 3, 12, 'Fridge', 1, 8000.00, 'upload/d9103b412a.png', '2022-07-14 11:24:04', 0),
+(10, 3, 13, 'Acer ideapad', 1, 45000.00, 'upload/244cd8735d.png', '2022-07-14 11:24:04', 0),
+(11, 3, 11, 'mouse', 1, 300.00, 'upload/9c5e05dda2.png', '2022-07-14 11:26:15', 0),
+(12, 3, 14, 'Macbook pro', 1, 100000.00, 'upload/72cafe3af0.png', '2022-07-14 11:26:15', 0),
+(13, 3, 13, 'Acer ideapad', 1, 45000.00, 'upload/244cd8735d.png', '2022-07-14 11:26:15', 0),
+(14, 3, 11, 'mouse', 1, 300.00, 'upload/9c5e05dda2.png', '2022-07-14 11:28:23', 0),
+(15, 3, 13, 'Acer ideapad', 1, 45000.00, 'upload/244cd8735d.png', '2022-07-14 11:28:23', 0);
 
 -- --------------------------------------------------------
 
@@ -186,6 +241,18 @@ ALTER TABLE `tbl_category`
   ADD PRIMARY KEY (`catId`);
 
 --
+-- Indexes for table `tbl_customer`
+--
+ALTER TABLE `tbl_customer`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_order`
+--
+ALTER TABLE `tbl_order`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tbl_product`
 --
 ALTER TABLE `tbl_product`
@@ -211,13 +278,25 @@ ALTER TABLE `tbl_brand`
 -- AUTO_INCREMENT for table `tbl_cart`
 --
 ALTER TABLE `tbl_cart`
-  MODIFY `cartId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `cartId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `tbl_category`
 --
 ALTER TABLE `tbl_category`
   MODIFY `catId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `tbl_customer`
+--
+ALTER TABLE `tbl_customer`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `tbl_order`
+--
+ALTER TABLE `tbl_order`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `tbl_product`
