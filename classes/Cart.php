@@ -93,6 +93,23 @@ class Cart{
         $this->db->delete($query);
     }
 
+    public function orderProduct($cusId){
+        $sId = session_id();
+        $query = "SELECT * FROM tbl_cart WHERE sId = '{$sId}'";
+        $getProduct = $this->db->select($query);
+        if($getProduct){
+            while($row = $getProduct->fetch_assoc()){
+                $productId = $row['productId'];
+                $productName = $row['productName'];
+                $quantity = $row['quantity'];
+                $price = $row['price'];
+                $image = $row['image'];
+                $insertQuery = "INSERT INTO tbl_order(cusId,productId,productName,quantity,price,image) VALUES('{$cusId}','{$productId}','{$productName}','{$quantity}','{$price}','{$image}')";
+                $insertResult = $this->db->insert($insertQuery);
+            }
+        }
+    }
+
 }
 
 ?>
