@@ -121,6 +121,15 @@ header("Cache-Control: max-age=2592000");
 			<li><a href="cart.php">Cart</a></li>
 			<li><a href="payment.php">Payment</a></li>
 			<?php } ?>
+
+			<?php
+				$cusId = Session::get("cusId");
+				$chkOrder = $ct->checkOrder($cusId);
+				if($chkOrder){
+			?>
+			<li><a href="orderdetails.php">Order</a></li>
+			<?php } ?>
+
 			<?php
 				$cusLogin = Session::get("cusLogin");
 				if($cusLogin == "true"){
@@ -129,6 +138,7 @@ header("Cache-Control: max-age=2592000");
 			<?php
 				}
 			?>
+
 			<li><a href="contact.php">Contact</a> </li>
 			<div class="clear"></div>
 		</ul>

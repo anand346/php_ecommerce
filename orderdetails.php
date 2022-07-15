@@ -6,6 +6,19 @@
 	}
 
 ?>
+<?php
+
+if(isset($_GET['confirmCusId'])){
+    $shiftid = $_GET['confirmCusId'];
+    $price   = $_GET['price'];
+    $time    = $_GET['time'];
+
+
+    $shift = $ct->productShiftConfirm($shiftid,$time,$price);
+}
+
+?>
+
  <div class="main">
     <div class="content">
     	<div class="section group">
@@ -35,7 +48,7 @@
                         <td><?php echo $row['productName']; ?></td>
                         <td><img src="admin/<?php echo $row['image']; ?>" alt=""/></td>
                         <td><?php echo $row['quantity']; ?></td>
-                        <td>$ 
+                        <td>$
                             <?php
                                 $total = $row['price'];
                                 echo $total;
@@ -45,14 +58,16 @@
                         <td><?php 
                             if($row['status'] == 0){
                                 echo "Pending";
+                            }else if($row['status'] == 1){
+                                echo '<a href="?confirmCusId='.$cusId.'&price='.$row['price'].'&time='.$row['date'].'">Shifted</a>';
                             }else{
-                                echo "Shifted";
+                                echo "confirm";
                             }
                         
                         ?></td>
                         <td>
                             <?php
-                                if($row['status'] == 1){
+                                if($row['status'] == 2){
                             ?>
                             <a onclick="return confirm('Are you surely want to delete this product ?');" href="">X</a>
                             <?php

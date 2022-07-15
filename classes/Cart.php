@@ -117,11 +117,76 @@ class Cart{
     }
 
     public function getOrderedProduct($cusId){
-        $query = "SELECT * FROM tbl_order WHERE cusId = '$cusId' ORDER BY productId DESC";
+        $query = "SELECT * FROM tbl_order WHERE cusId = '$cusId' ORDER BY date DESC";
         $result = $this->db->select($query);
         return $result;      
     }
 
+
+    public function checkOrder($cusId){
+        $query = "  SELECT  * FROM tbl_order WHERE cusId = '$cusId'";
+        $result = $this->db->select($query);
+        return $result;      
+    }
+
+    public function getAllOrderProduct(){
+        $query = "SELECT  * FROM tbl_order ORDER BY date";
+        $result = $this->db->select($query);
+        return $result;
+    }
+
+
+    public function productShifted($shiftid,$time,$price){
+        $shiftid = $this->db->link->real_escape_string($shiftid);
+        $time = $this->db->link->real_escape_string($time);
+        $price = $this->db->link->real_escape_string($price);
+
+        $query       = "UPDATE tbl_order SET status = '1' WHERE cusId = '$shiftid' AND date = '{$time}' AND price = ' {$price}'";
+        $updated_row = $this->db->update($query);
+        if($updated_row){
+            $msg = "<span class = 'success'>updated successfully !</span> ";
+            return $msg;
+            // header("location:cart.php");
+        }else{
+            $msg = "<span class = 'error'>not updated !</span> ";
+            return $msg;
+        }
+
+    }
+
+    public function delProductShifted($cusid,$time,$price){
+        $cusid = $this->db->link->real_escape_string($cusid);
+        $time = $this->db->link->real_escape_string($time);
+        $price = $this->db->link->real_escape_string($price);
+
+        $query = "DELETE FROM tbl_order WHERE cusId = $cusid AND price = '$price' AND date = '$time' ";
+        $result = $this->db->delete($query);
+        if($result){
+            $msg = "<span class = 'success'>Order deleted successfully !</span> ";
+            return $msg;
+        }else{
+            $msg = "<span class = 'error'>Order not deleted !</span> ";
+            return $msg;
+        }
+    }
+
+    public function productShiftConfirm($cusId,$time,$price){
+        $cusId = $this->db->link->real_escape_string($cusId);
+        $time = $this->db->link->real_escape_string($time);
+        $price = $this->db->link->real_escape_string($price);
+
+        $query       = "UPDATE tbl_order SET status = '2' WHERE cusId = '$cusId' AND date = '{$time}' AND price = ' {$price}'";
+        $updated_row = $this->db->update($query);
+        if($updated_row){
+            $msg = "<span class = 'success'>updated successfully !</span> ";
+            return $msg;
+            // header("location:cart.php");
+        }else{
+            $msg = "<span class = 'error'>not updated !</span> ";
+            return $msg;
+        }
+
+    }
 }
 
 ?>
