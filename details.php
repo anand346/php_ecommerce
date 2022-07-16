@@ -1,16 +1,30 @@
 <?php include 'inc/header.php'; ?>
 <?php
-    if(!isset($_GET['proid']) OR $_GET['proid'] == NULL){
-        echo "<script>window.location = '404.php';</script>";
-    }else{
+    if(isset($_GET['proid'])){
         $id = preg_replace("/[^-a-zA-Z0-9_]/","",$_GET['proid']);
-        
     }
-    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])){
 		$quantity = $_POST['quantity'];
 		$addCart = $ct->addToCart($quantity,$id);
 	}
 ?>
+<?php
+	if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['compare'])){
+		$productid = $_POST['productId'];
+		$insertComp = $pd->insertCompareData($cusid,$productid);
+	}
+
+?>
+<?php
+	if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['wlist'])){
+		$productid = $id;
+		$saveWlist = $pd->saveWishlistData($cusid,$productid);
+	}
+
+?>
+<style>
+	.mybutton{width : 100px;float:left;margin-right:50px;}
+</style>
  <div class="main">
     <div class="content">
     	<div class="section group">
@@ -36,13 +50,40 @@
 								<input type="submit" class="buysubmit" name="submit" value="Buy Now"/>
 							</form>				
 						</div>
-						<span style = "color:red;font-size:18px;">
+					
 							<?php
 								if(isset($addCart)){
 									echo $addCart;
 								}	
 							?>
-						</span>
+							<?php
+								if(isset($insertComp)){
+									echo $insertComp;
+								}	
+							?>
+							<?php
+								if(isset($saveWlist)){
+									echo $saveWlist;
+								}	
+							?>
+						<?php
+							$cusLogin = Session::get("cusLogin");
+							if($cusLogin == "true"){
+						?>
+						<div class="add-cart">
+							<div class="mybutton">
+								<form action="" method="post">
+									<input type="hidden" class="buyfield" name="productId" value="<?php echo $result['productId']; ?>"/>
+									<input type="submit" class="buysubmit" name="compare" value="Add to compare"/>
+								</form>
+							</div>
+							<div class="mybutton">
+								<form action="" method="post">
+									<input type="submit" class="buysubmit" name="wlist" value="Add to wishlist"/>
+								</form>				
+							</div>
+						</div>
+						<?php } ?>
 					</div>
 					<div class="product-desc">
 						<h2>Product Details</h2>

@@ -59,22 +59,23 @@ if(isset($_GET['confirmCusId'])){
                             if($row['status'] == 0){
                                 echo "Pending";
                             }else if($row['status'] == 1){
-                                echo '<a href="?confirmCusId='.$cusId.'&price='.$row['price'].'&time='.$row['date'].'">Shifted</a>';
+                                echo 'Shifted';
+                                // echo '<a href="?confirmCusId='.$cusId.'&price='.$row['price'].'&time='.$row['date'].'">Shifted</a>';
                             }else{
-                                echo "confirm";
+                                echo "Done";
                             }
                         
                         ?></td>
                         <td>
                             <?php
-                                if($row['status'] == 2){
-                            ?>
-                            <a onclick="return confirm('Are you surely want to delete this product ?');" href="">X</a>
-                            <?php
-                                }else{
-                            ?>
-                            N/A
-                            <?php } ?>
+                                if($row['status'] == 1){
+                                    echo '<a href="?confirmCusId='.$cusId.'&price='.$row['price'].'&time='.$row['date'].'">Confirm</a>';
+                                }else if($row['status'] == 2){
+                                    echo "OK";
+                                }else if($row['status'] == 0){
+                                    echo "N/A";
+                                } 
+                             ?>
                         </td>
                     </tr>
                     <?php } } ?>
@@ -86,3 +87,4 @@ if(isset($_GET['confirmCusId'])){
     </div>
  </div>
 <?php include 'inc/footer.php'; ?>
+

@@ -243,6 +243,83 @@ class Product
         $result = $this->db->select($query);
         return $result;      
     }
+
+
+    public function insertCompareData($cusid,$compid){
+        $cusId     = $this->db->link->real_escape_string($cusid);
+        $productId = $this->db->link->real_escape_string($compid);
+
+        $cquery = "SELECT * FROM tbl_compare WHERE productId = '$productId' AND compId = '$cusId'";
+        $resultcquery = $this->db->select($cquery);
+        if($resultcquery){
+            $msg = "<span class = 'error'>Product Already Added.</span>";
+            return $msg;
+        }
+
+        $query = "SELECT * FROM tbl_product WHERE productId = '{$productId}'";
+        $row   = $this->db->select($query)->fetch_assoc();
+        if($row){
+            $productId   = $row['productId'];
+            $productName = $row['productName'];
+            $price       = $row['price'];
+            $image       = $row['image'];
+        }
+        $insertQuery  = "INSERT INTO tbl_compare(compId,productId,productName,price,image) VALUES('{$cusId}','{$productId}','{$productName}','{$price}','{$image}')";
+        $insertResult = $this->db->insert($insertQuery);
+        if($insertResult){
+            $msg = "<span class = 'success'>Added ! Check compare page.</span>";
+            return $msg;             
+        } else {
+            $msg = "<span class = 'error'>Not Added.</span>";
+            return $msg;
+        }
+    }
+
+    public function getComparedData($cusid){
+        $cusid = $this->db->link->real_escape_string($cusid);
+        $query = "SELECT * FROM tbl_compare WHERE compId = '$cusid' ORDER BY id DESC";
+        $result = $this->db->select($query);
+        return $result;
+    }
+
+
+    public function delComparedData($cusid){
+        $cusid = $this->db->link->real_escape_string($cusid);
+        $delQuery = "DELETE FROM tbl_compare WHERE compId = '$cusid'";
+        $delResult = $this->db->delete($delQuery);
+        if($delResult){}
+    }
+
+    public function saveWishlistData($cusid,$productid){
+
+        $cusid      = $this->db->link->real_escape_string($cusid);
+        $productid  = $this->db->link->real_escape_string($productid);
+
+        $cquery = "SELECT * FROM tbl_wlist WHERE productId = '$productid' AND cusId = '$cusid'";
+        $resultcquery = $this->db->select($cquery);
+        if($resultcquery){
+            $msg = "<span class = 'error'>Product Already Added.</span>";
+            return $msg;
+        }
+
+        $query      = "SELECT * FROM tbl_product WHERE productId = '{$productid}'";
+        $row = $this->db->select($query)->fetch_assoc();
+        if($row){
+                $productId    = $row['productId'];
+                $productName  = $row['productName'];
+                $price        = $row['price'];
+                $image        = $row['image'];
+                $insertQuery  = "INSERT INTO tbl_wlist(cusId,productId,productName,price,image) VALUES('{$cusid}','{$productId}','{$productName}','{$price}','{$image}')";
+                $insertResult = $this->db->insert($insertQuery);
+                if($insertResult){
+                    $msg = "<span class = 'success'>Added ! Check whishlist page .</span>";
+                    return $msg;             
+                } else {
+                    $msg = "<span class = 'error'>Not Added.</span>";
+                    return $msg;
+                }              
+        }
+    }
 }
 
 
