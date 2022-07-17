@@ -147,6 +147,13 @@ header("Cache-Control: max-age=2592000");
 			?>
 			<li><a href="compare.php">Compare</a> </li>
 			<?php } ?>
+			<?php
+				$cusid = Session::get("cusId");
+				$checkWishlist = $pd->getWishlistData($cusid);
+				if($checkWishlist){
+			?>
+			<li><a href="wishlist.php">Wishlist</a> </li>
+			<?php } ?>
 			<li><a href="contact.php">Contact</a> </li>
 			<div class="clear"></div>
 		</ul>

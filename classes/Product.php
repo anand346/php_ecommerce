@@ -320,6 +320,19 @@ class Product
                 }              
         }
     }
+
+    public function getWishlistData($cusid){
+        $cusid = $this->db->link->real_escape_string($cusid);
+        $query = "SELECT * FROM tbl_wlist WHERE cusId = '$cusid' ORDER BY id DESC";
+        $result = $this->db->select($query);
+        return $result;      
+    }
+
+    public function delWlistData($cusid,$productId){
+        $cusid = $this->db->link->real_escape_string($cusid);
+        $delQuery = "DELETE FROM tbl_wlist WHERE cusId = '$cusid' AND productId = '$productId'";
+        $delResult = $this->db->delete($delQuery);
+    }
 }
 
 

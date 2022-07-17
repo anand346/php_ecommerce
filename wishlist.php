@@ -1,9 +1,10 @@
 <?php include 'inc/header.php'; ?>
 <?php
-	$login = Session::get("cusLogin");
-	if($login == false){
-		header("location:login.php");
-	}
+    if(isset($_GET['delwlistid'])){
+        $productId = $_GET['delwlistid'];
+        $delWlist = $pd->delWlistData($cusid,$productId);
+    }
+
 
 ?>
 <div class="main">
@@ -21,10 +22,10 @@
 							</tr>
 							<?php
                                 $cusid = Session::get("cusId");
-								$getPd = $pd->getComparedData($cusid);
-								if($getPd){
+								$checkWishlist = $pd->getWishlistData($cusid);
+								if($checkWishlist){
 									$sl = 0;
-									while($row = $getPd->fetch_assoc()){
+									while($row = $checkWishlist->fetch_assoc()){
 										$sl++;
 							?>
 							<tr>
@@ -32,7 +33,10 @@
 								<td><?php echo $row['productName']; ?></td>
 								<td>$<?php echo $row['price']; ?></td>
 								<td><img src="admin/<?php echo $row['image']; ?>" alt=""/></td>
-								<td><a href="details.php?proid=<?php echo $row['productId']; ?>">View</a></td>
+								<td>
+                                    <a href="details.php?proid=<?php echo $row['productId']; ?>">Buy Now</a> || 
+                                    <a href="?delwlistid=<?php echo $row['productId']; ?>">Remove</a>
+                                </td>
 							</tr>
 							<?php } } ?>
 							
